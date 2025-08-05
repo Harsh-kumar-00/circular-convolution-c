@@ -1,0 +1,59 @@
+#include<stdio.h>
+#include<limits.h>
+
+int length(int *arr) {
+    int count = 0;
+    while (arr[count] != INT_MIN) {
+        count++;
+    }
+    return count;
+}
+
+int main()
+{
+ int x[] = {3,4,-1,-2,1,2,INT_MIN};
+ int h[] = {1,-1,2,INT_MIN};
+ int N1 = length(x);
+ int N2 = length(h);
+ int max = (N1 > N2) ? N1 : N2;
+ 
+ int x_pad[max];
+ int h_pad[max];
+ 
+ int i,j;
+ 
+ for(i=0; i<max;i++)
+ {
+     if(i<N1)
+      x_pad[i] = x[i];
+     else
+      x_pad[i] = 0;
+ }
+ 
+ for(j=0; j<max; j++)
+ {
+     if(j<N2)
+      h_pad[j] = h[j];
+     else
+      h_pad[j] = 0;
+ }
+ 
+ int y[max];
+ 
+ int m,n;
+ 
+ for (m = 0; m < max; m++) {
+    y[m] = 0;
+    for (n = 0; n < max; n++) {
+        int index = (m - n + max) % max;
+        y[m] += x_pad[n] * h_pad[index];
+    }
+}
+
+printf("Circular convolution output:\n");
+for (i = 0; i < max; i++) {
+    printf("%d ", y[i]);
+}
+printf("\n");
+
+}
